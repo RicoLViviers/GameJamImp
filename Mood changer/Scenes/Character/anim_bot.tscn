@@ -1,0 +1,181 @@
+[gd_scene load_steps=23 format=3 uid="uid://bu4fn5pdxtgox"]
+
+[ext_resource type="Script" uid="uid://bp6uvu8c8tyo7" path="res://Scripts/Character/Movement.gd" id="1_irevf"]
+[ext_resource type="Texture2D" uid="uid://cnqtenbgm3oc" path="res://Sprites/Character/Anim_Robot_Walk1_v1.1_spritesheet.png" id="2_5bg66"]
+[ext_resource type="Texture2D" uid="uid://duuxg6rhuqig7" path="res://Sprites/Character/Anim_Robot_Jump1_v1.1_spritesheet.png" id="2_5jgj6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_683mp"]
+atlas = ExtResource("2_5jgj6")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f6xc7"]
+atlas = ExtResource("2_5jgj6")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4o672"]
+atlas = ExtResource("2_5jgj6")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xvxkh"]
+atlas = ExtResource("2_5jgj6")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h0y67"]
+atlas = ExtResource("2_5jgj6")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fa4kl"]
+atlas = ExtResource("2_5jgj6")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4mbj6"]
+atlas = ExtResource("2_5jgj6")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mq51f"]
+atlas = ExtResource("2_5jgj6")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6tyh4"]
+atlas = ExtResource("2_5jgj6")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5jgj6"]
+atlas = ExtResource("2_5bg66")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x5t5w"]
+atlas = ExtResource("2_5bg66")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gwn7v"]
+atlas = ExtResource("2_5bg66")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1jr4"]
+atlas = ExtResource("2_5bg66")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xtshs"]
+atlas = ExtResource("2_5bg66")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5f3ni"]
+atlas = ExtResource("2_5bg66")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5bg66"]
+atlas = ExtResource("2_5jgj6")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_683mp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_683mp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f6xc7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4o672")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xvxkh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h0y67")
+}],
+"loop": false,
+"name": &"fall",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fa4kl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4mbj6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mq51f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6tyh4")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5jgj6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x5t5w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gwn7v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r1jr4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xtshs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5f3ni")
+}],
+"loop": true,
+"name": &"run",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5bg66")
+}],
+"loop": true,
+"name": &"stand",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f6xc7"]
+height = 28.0
+
+[sub_resource type="GDScript" id="GDScript_5bg66"]
+script/source = "extends Camera2D
+
+@export var randomStrength: float = 30.0
+@export var shakeFade: float = 5.0
+
+var rng = RandomNumberGenerator.new()
+
+var shake_strength: float = 0.0
+
+
+func _ready() -> void:
+	pass
+
+func apply_shake():
+		shake_strength = randomStrength
+		
+func randomOffset() -> Vector2:
+	return Vector2(rng)
+	
+"
+
+[node name="AnimBot" type="CharacterBody2D" groups=["Player"]]
+script = ExtResource("1_irevf")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_683mp")
+animation = &"stand"
+autoplay = "run"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CapsuleShape2D_f6xc7")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+script = SubResource("GDScript_5bg66")
